@@ -4,13 +4,13 @@ import { DebounceHelper } from '../../Utils/helper'
 import { fetchBooksData } from './Home.actions'
 
 function Home() {
-  const dataSchema = {
+  interface dataSchema {
     "kind": String,
     "totalItems": Number,
-    "items": Array
+    "items": Array<any>,
   }
 
-  const [data, setData] = useState(dataSchema)
+  const [data, setData] = useState<dataSchema>()
 
   const handleOnChange = DebounceHelper((e) => {
     const searchquery = e.target.value
@@ -24,7 +24,7 @@ function Home() {
       <input onChange={e => handleOnChange(e)} />
       {
         Array.isArray(data?.items) &&
-        data?.items.map(d => <div className={styles.render}>{d.volumeInfo.title}</div>)
+        data?.items.map(d => <div className={styles.render}>{d?.volumeInfo?.title}</div>)
       }
     </div>
   )
