@@ -15,7 +15,8 @@ function Home() {
   const [searchIndex, setSearchIndex] = useState(0)
 
   useEffect(()=>{
-    fetchBooksData(searchQuery, setData, searchIndex)
+    searchQuery && fetchBooksData(searchQuery, setData, searchIndex)
+    console.log(searchQuery, searchIndex)
   },[searchIndex, searchQuery])
 
   const handleOnChange = DebounceHelper((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,9 +41,9 @@ function Home() {
     const a = [1,2,3,4,5];
     return(
     <div className={styles.painationContainer}>
-      <div>Prev</div>
+      <div onClick={() => setSearchIndex((d) => d > 0 ? d-1 : d)}>Prev</div>
       {a.map(d => <div onClick={handlePageClick}>{d}</div>)}
-      <div>Next</div>
+      <div onClick={() => setSearchIndex((d) => d < 5 ? d+1 : d)}>Next</div>
     </div>
     )
   }
@@ -52,7 +53,7 @@ function Home() {
       <div className={styles.heading}>search book here</div>
       <input onChange={e => handleOnChange(e)} />
       {renderBooksData()}
-      {renderPagination()}
+      {searchQuery && renderPagination()}
     </div>
   )
 }
