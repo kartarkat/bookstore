@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styles from './style.module.scss'
 import { DebounceHelper } from '../../Utils/helper'
 import { fetchBooksData } from './Home.actions'
+import Pagination from '../../Components/Pagination/Pagination'
 
 function Home() {
   interface dataSchema {
@@ -14,10 +15,10 @@ function Home() {
   const [searchQuery, setSearchQuery] = useState('')
   const [searchIndex, setSearchIndex] = useState(0)
 
-  useEffect(()=>{
+  useEffect(() => {
     searchQuery && fetchBooksData(searchQuery, setData, searchIndex)
     console.log(searchQuery, searchIndex)
-  },[searchIndex, searchQuery])
+  }, [searchIndex, searchQuery])
 
   const handleOnChange = DebounceHelper((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value)
@@ -27,33 +28,30 @@ function Home() {
     <div className={styles.booksContainer}>
       {
         Array.isArray(data?.items) &&
-        data?.items.map(d => <div className={styles.render}>{d?.volumeInfo?.title}</div>)
+        data?.items.map(d =>
+          <div className={styles.render}>{d?.volumeInfo?.title}</div>
+        )
       }
     </div>
   )
 
   const handlePageClick = (e) => {
-      setSearchIndex(Number(e.target.innerText))
-      console.log(typeof Number(e.target.innerText))
+    setSearchIndex(Number(e.target.innerText))
+    console.log(typeof Number(e.target.innerText))
   }
 
-  const renderPagination = () => {
-    const a = [1,2,3,4,5];
-    return(
-    <div className={styles.painationContainer}>
-      <div onClick={() => setSearchIndex((d) => d > 0 ? d-1 : d)}>Prev</div>
-      {a.map(d => <div onClick={handlePageClick}>{d}</div>)}
-      <div onClick={() => setSearchIndex((d) => d < 5 ? d+1 : d)}>Next</div>
-    </div>
-    )
-  }
 
   return (
     <div className={styles.homeContainer}>
       <div className={styles.heading}>search book here</div>
       <input onChange={e => handleOnChange(e)} />
       {renderBooksData()}
-      {searchQuery && renderPagination()}
+      {searchQuery &&
+        <Pagination
+          setSearchIndex={setSearchIndex}
+          handlePageClick={handlePageClick}
+        />
+      }
     </div>
   )
 }

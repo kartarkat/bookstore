@@ -1,0 +1,14 @@
+.painationContainer{
+    color: white;
+    display: flex;
+    div{
+        padding: 5px 15px;
+        text-align: center;
+
+        &:hover{
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: rgb(85, 88, 88);
+        }
+    }
+}
