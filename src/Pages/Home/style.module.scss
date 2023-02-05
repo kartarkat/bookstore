@@ -1,5 +1,11 @@
-.input{
+.homeContainer{
     padding: 50px;
+
+    .booksContainer{
+        margin: 30px 0px;;
+        min-height: 250px;
+        border: 1px solid white;
+    }
 
     .render{
         color: white;
@@ -9,4 +15,19 @@
 .heading{
     color: red;
     font-size: 50;
+}
+
+.painationContainer{
+    color: white;
+    display: flex;
+    div{
+        padding: 5px 20px;
+        text-align: center;
+
+        &:hover{
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: rgb(85, 88, 88);
+        }
+    }
 }
