@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './Pagination.module.scss'
 
 const Pagination = (props) => {
-    const { setSearchIndex, handlePageClick, totalCount = 50 } = props
+    const { searchIndex, setSearchIndex, handlePageClick, totalCount = 50 } = props
     const pageCount = [...Array(totalCount / 10).keys()];
 
     const incrementPage = () => {
@@ -15,11 +15,11 @@ const Pagination = (props) => {
 
     return (
         <div className={styles.painationContainer}>
-            <div onClick={incrementPage}>Prev</div>
-            {pageCount.map(d =>
-                <div onClick={handlePageClick}>{d + 1}</div>
+            <div onClick={incrementPage} disabled={searchIndex !== 0}>Prev</div>
+            {pageCount.map((d,i) =>
+                <div key={i} onClick={handlePageClick}>{d + 1}</div>
             )}
-            <div onClick={decrementPage}>Next</div>
+            <div onClick={decrementPage} disabled={searchIndex !== 5}>Next</div>
         </div>
     )
 }

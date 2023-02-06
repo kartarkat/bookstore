@@ -48,6 +48,7 @@ function Home() {
       {renderBooksData()}
       {searchQuery &&
         <Pagination
+          searchIndex={searchIndex}
           setSearchIndex={setSearchIndex}
           handlePageClick={handlePageClick}
         />
