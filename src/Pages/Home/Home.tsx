@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styles from './style.module.scss'
+import styles from './home.module.scss'
 import { DebounceHelper } from '../../Utils/helper'
 import { fetchBooksData } from './Home.actions'
 import Pagination from '../../Components/Pagination/Pagination'
@@ -12,16 +12,18 @@ function Home() {
   }
 
   const [data, setData] = useState<dataSchema>()
-  const [searchQuery, setSearchQuery] = useState('')
-  const [searchIndex, setSearchIndex] = useState(0)
+  const [searchQuery, setSearchQuery] = useState<String>('')
+  const [searchIndex, setSearchIndex] = useState<number>(0)
+  const [loader, setLoader] = useState<Boolean>()
 
   useEffect(() => {
-    searchQuery && fetchBooksData(searchQuery, setData, searchIndex)
+    searchQuery && fetchBooksData(searchQuery, setData, searchIndex, setLoader)
     console.log(searchQuery, searchIndex)
   }, [searchIndex, searchQuery])
 
   const handleOnChange = DebounceHelper((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value)
+    setLoader(true)
   });
 
   const renderBooksData = () => (
@@ -41,18 +43,30 @@ function Home() {
   }
 
 
+  const renderData = () => {
+
+    return (
+      <>
+        {loader ?
+          <div className={styles.loader}> Loading data ...</div>
+          : renderBooksData()}
+        {searchQuery &&
+          <Pagination
+            searchIndex={searchIndex}
+            setSearchIndex={setSearchIndex}
+            handlePageClick={handlePageClick}
+          />
+        }
+      </>
+    )
+  }
+
+
   return (
     <div className={styles.homeContainer}>
       <div className={styles.heading}>search book here</div>
       <input onChange={e => handleOnChange(e)} />
-      {renderBooksData()}
-      {searchQuery &&
-        <Pagination
-          searchIndex={searchIndex}
-          setSearchIndex={setSearchIndex}
-          handlePageClick={handlePageClick}
-        />
-      }
+      {renderData()}
     </div>
   )
 }
