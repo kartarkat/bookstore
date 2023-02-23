@@ -3,8 +3,9 @@ import styles from './home.module.scss'
 import { DebounceHelper } from '../../Utils/helper'
 import { fetchBooksData } from './Home.actions'
 import Pagination from '../../Components/Pagination/Pagination'
+import AutoCompleteHelper from '../../Components/AutoCompleteHelper'
 
-function Home() {
+const Home: React.FC = () => {
   interface dataSchema {
     "kind": String,
     "totalItems": Number,
@@ -35,6 +36,7 @@ function Home() {
         )
       }
     </div>
+
   )
 
   const handlePageClick = (e) => {
@@ -65,8 +67,18 @@ function Home() {
   return (
     <div className={styles.homeContainer}>
       <div className={styles.heading}>search book here</div>
-      <input onChange={e => handleOnChange(e)} />
-      {renderData()}
+     <div style={{ marginTop: "20px" }}>
+        <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+      </div>
+      <AutoCompleteHelper
+        searchValue={searchQuery}
+        onSearchChange={handleOnChange}
+        optionLabelKey="word"
+        optionValueKey="word"
+        apiUrl="https://api.datamuse.com/sug"
+        debounceTime={500}
+      />
+      {/* {renderData()} */}
     </div>
   )
 }
