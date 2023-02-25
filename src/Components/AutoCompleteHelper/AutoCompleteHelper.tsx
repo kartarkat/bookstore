@@ -11,7 +11,6 @@ type AutoCompleteProps = {
   debounceTime?: number;
 };
 
-
 interface Option {
   [key: string]: any;
 }
