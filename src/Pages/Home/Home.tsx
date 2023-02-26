@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './home.module.scss'
 import { DebounceHelper } from '../../Utils/helper'
 import { fetchBooksData } from './Home.actions'
@@ -12,20 +12,19 @@ const Home: React.FC = () => {
     "items": Array<any>,
   }
 
+  const queryRef = useRef()
+
   const [data, setData] = useState<dataSchema>()
   const [searchQuery, setSearchQuery] = useState<String>('')
   const [searchIndex, setSearchIndex] = useState<number>(0)
   const [loader, setLoader] = useState<Boolean>()
 
-  useEffect(() => {
-    searchQuery && fetchBooksData(searchQuery, setData, searchIndex, setLoader)
-    console.log(searchQuery, searchIndex)
-  }, [searchIndex, searchQuery])
-
   const handleOnChange = DebounceHelper((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value)
     setLoader(true)
   });
+
+ console.log('okok', queryRef?.current?.value)
 
   const renderBooksData = () => (
     <div className={styles.booksContainer}>
@@ -42,6 +41,13 @@ const Home: React.FC = () => {
   const handlePageClick = (e) => {
     setSearchIndex(Number(e.target.innerText))
     console.log(typeof Number(e.target.innerText))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if(queryRef?.current?.value){
+      fetchBooksData(searchQuery, setData, searchIndex, setLoader)
+    }
   }
 
 
@@ -67,9 +73,14 @@ const Home: React.FC = () => {
   return (
     <div className={styles.homeContainer}>
       <div className={styles.heading}>search book here</div>
-     <div style={{ marginTop: "20px" }}>
-        <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
-      </div>
+     <form style={{ marginTop: "20px" }} onSubmit={handleSubmit}>
+        <input 
+        ref={queryRef} 
+        type="text" 
+        value={searchQuery} 
+        onChange={(e) => setSearchQuery(e.target.value)} 
+        />
+      </form>
       <AutoCompleteHelper
         searchValue={searchQuery}
         onSearchChange={handleOnChange}
@@ -77,8 +88,9 @@ const Home: React.FC = () => {
         optionValueKey="word"
         apiUrl="https://api.datamuse.com/sug"
         debounceTime={500}
+        handleSubmit={handleSubmit}
       />
-      {/* {renderData()} */}
+      {renderData()}
     </div>
   )
 }

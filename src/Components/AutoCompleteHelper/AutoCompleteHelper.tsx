@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./AutoCompleteHelper.scss";
 
@@ -9,6 +9,7 @@ type AutoCompleteProps = {
   optionValueKey: string;
   apiUrl: string;
   debounceTime?: number;
+  handleSubmit: () => void;
 };
 
 interface Option {
@@ -21,7 +22,8 @@ const AutoCompleteHelper: React.FC<AutoCompleteProps> = ({
   optionLabelKey,
   optionValueKey,
   apiUrl,
-  debounceTime = 300
+  debounceTime = 300,
+  handleSubmit,
 }) => {
   const [options, setOptions] = useState<Option[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -49,6 +51,7 @@ const AutoCompleteHelper: React.FC<AutoCompleteProps> = ({
   }, [apiUrl, debounceTime, optionLabelKey, optionValueKey, searchValue]);
 
   const handleOptionSelect = (option) => {
+    handleSubmit()
     onSearchChange(option.label);
     setOptions([]);
   };
