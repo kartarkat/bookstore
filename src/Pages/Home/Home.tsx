@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styles from './home.module.scss'
-import { DebounceHelper } from '../../Utils/helper'
+// import { DebounceHelper } from '../../Utils/helper'
 import { fetchBooksData } from './Home.actions'
 import Pagination from '../../Components/Pagination/Pagination'
-import AutoCompleteHelper from '../../Components/AutoCompleteHelper'
+import PageHeader from '../../Components/PageHeader'
+// import AutoCompleteHelper from '../../Components/AutoCompleteHelper'
 
 const Home: React.FC = () => {
   interface dataSchema {
@@ -12,17 +13,17 @@ const Home: React.FC = () => {
     "items": Array<any>,
   }
 
-  const queryRef = useRef()
+  const queryRef = useRef(null)
 
   const [data, setData] = useState<dataSchema>()
   const [searchQuery, setSearchQuery] = useState<String>('')
   const [searchIndex, setSearchIndex] = useState<number>(0)
   const [loader, setLoader] = useState<Boolean>()
 
-  const handleOnChange = DebounceHelper((e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value)
-    setLoader(true)
-  });
+  // const handleOnChange = DebounceHelper((e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setSearchQuery(e.target.value)
+  //   setLoader(true)
+  // });
 
  console.log('okok', queryRef?.current?.value)
 
@@ -50,7 +51,6 @@ const Home: React.FC = () => {
     }
   }
 
-
   const renderData = () => {
 
     return (
@@ -69,19 +69,26 @@ const Home: React.FC = () => {
     )
   }
 
+  // const renderHeader = () => {
+
+  // }
+
 
   return (
     <div className={styles.homeContainer}>
+      <PageHeader />
       <div className={styles.heading}>search book here</div>
      <form style={{ marginTop: "20px" }} onSubmit={handleSubmit}>
         <input 
         ref={queryRef} 
         type="text" 
-        value={searchQuery} 
+        // value={searchQuery} 
         onChange={(e) => setSearchQuery(e.target.value)} 
         />
+        {/* <img src='' alt=''/> */}
+        <div role="button">hi</div>
       </form>
-      <AutoCompleteHelper
+      {/* <AutoCompleteHelper
         searchValue={searchQuery}
         onSearchChange={handleOnChange}
         optionLabelKey="word"
@@ -89,7 +96,7 @@ const Home: React.FC = () => {
         apiUrl="https://api.datamuse.com/sug"
         debounceTime={500}
         handleSubmit={handleSubmit}
-      />
+      /> */}
       {renderData()}
     </div>
   )
