@@ -48,7 +48,7 @@ const RenderBook: React.FC<Props> = ({ book }) => {
                     alt={title} />
             </div>
             <div className={styles.title}>{title}</div>
-            <div>By: {authors.map(d => <span>{d}</span>)}</div>
+            <div>By: {authors.map((d,i) => <span key={i}>{d}</span>)}</div>
         </div>
     )
 }

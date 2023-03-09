@@ -1,10 +1,11 @@
-export const DebounceHelper = (func, wait=500) => {
-        let timeout;
-        return function(...args) {
-          if (timeout) clearTimeout(timeout);
-          timeout = setTimeout(() => {
-            func.apply(this, args);
-          }, wait);
-        };
-      }
+export function debounce(func, delay=500) {
+  let timeoutId;
+  return function(...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+}
+
     

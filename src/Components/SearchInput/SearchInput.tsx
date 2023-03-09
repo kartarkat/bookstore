@@ -1,26 +1,23 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { images } from '../../assets/images'
+import { debounce } from '../../Utils/helper'
 import styles from './SearchInput.module.scss'
 
 
 export default function SearchInput({ handleSubmit }) {
 
-    const inputRef = useRef<HTMLInputElement>(null)
+    const ok = (val) => { console.log('ok', val) }
 
-    const handleKeyDown = (event) => {
-        let { keyCode, target: { value } } = event
-        if (keyCode === 13) {
-            handleSubmit(value)
-        }
+    const aa = (e) => {
+        debounce(() => ok(e.target.value), 500)
     }
 
     return (
         <div className={styles.inputContainer}>
             <input
                 type='text'
-                ref={inputRef}
                 placeholder='Search for books'
-                onKeyDown={handleKeyDown}
+                onChange={aa}
                 className={styles.input}
             />
             <img
