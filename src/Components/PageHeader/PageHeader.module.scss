@@ -1,4 +1,14 @@
-.headerContainer{
+.headerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
     background-color: #222;
-    height: 10vh;
+    color: white;
+    gap: 1rem;
+
+    .logo {
+        width: 3rem;
+        height: 3rem;
+    }
 }
