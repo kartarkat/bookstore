@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import styles from './home.module.scss'
 import PageHeader from '../../Components/PageHeader'
-import RenderBook from '../../Components/RenderBook/'
+// import RenderBook from '../../Components/RenderBook/'
 import { fetchBooks } from '../../Utils/api'
-import { images } from '../../assets/images'
+// import { images } from '../../assets/images'
 
 interface Books {
   items: Item[]
@@ -16,6 +16,7 @@ interface Item {
 const Home: React.FC = () => {
 
   const [books, setBooks] = useState<Books>({ items: [] });
+  console.log(books)
 
   useEffect(() => {
     (async function () {
