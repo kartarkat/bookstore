@@ -1,4 +1,4 @@
-export const FETCH_BOOKS_URL = 'https://www.googleapis.com/books/v1/volumes?q='
+export const FETCH_BOOKS_URL = 'https://www.googleapis.com/books/v1/volumes?maxResults=12&q='
 
 export const fetchBooks = async(query) => {
     const res = await fetch(`${FETCH_BOOKS_URL}${query}`)

@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './home.module.scss'
 import PageHeader from '../../Components/PageHeader'
 import RenderBook from '../../Components/RenderBook/'
+import { fetchBooks } from '../../Utils/api'
 
 interface Books {
   items: string[]
@@ -9,15 +10,22 @@ interface Books {
 
 const Home: React.FC = () => {
 
-  const [books, setBooks] = useState<Books>({ items: []})
+  const [books, setBooks] = useState<Books>({ items: []});
+
+  useEffect(()=>{
+    (async function(){
+      setBooks(await fetchBooks("anime"))
+    })()
+  }, [])
+
 
   return (
     <div className={styles.homeContainer}>
       <PageHeader setBooks={setBooks} />
       <div className={styles.bookSection}>
-      {books.items.length >1 ?
+      {books.items.length > 1 ?
       books.items.map(book => <RenderBook book={book}/>)
-       : null}
+       : <div>Loading data</div>}
       </div>
     </div>
   )

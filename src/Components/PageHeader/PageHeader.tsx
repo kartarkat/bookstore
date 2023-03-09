@@ -1,13 +1,13 @@
 import React from 'react'
 import { images } from '../../assets/images'
 import { fetchBooks } from '../../Utils/api'
-import Input from '../Input'
+import SearchInput from '../SearchInput'
 import styles from './PageHeader.module.scss'
 
 function PageHeader({setBooks}) {
 
   const handleInputSubmit = async(query: string) => {
-    setBooks(await fetchBooks(query))
+    if(query)setBooks(await fetchBooks(query))
   }
 
   console.log('reload test')
@@ -15,7 +15,7 @@ function PageHeader({setBooks}) {
   return (
     <div className={styles.headerContainer}>
         <img className={styles.logo} src={images.logo} alt='logo'/>
-        <Input handleSubmit={handleInputSubmit}/>
+        <SearchInput handleSubmit={handleInputSubmit}/>
     </div>
   )
 }
