@@ -3,9 +3,14 @@
     width: 15rem;
 
     .imageContainer {
+        display: flex;
         width: 10rem;
         height: 15rem;
 
+        .image {
+            width: 100%;
+            height: auto;
+        }
     }
 
     .title {
