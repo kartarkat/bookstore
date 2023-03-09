@@ -1,13 +1,16 @@
 import React from 'react'
 import { images } from '../../assets/images'
+import { fetchBooks } from '../../Utils/api'
 import Input from '../Input'
 import styles from './PageHeader.module.scss'
 
-function PageHeader() {
+function PageHeader({setBooks}) {
 
-  const handleInputSubmit = (query: string) => {
-    console.log(query, 'oo')
+  const handleInputSubmit = async(query: string) => {
+    setBooks(await fetchBooks(query))
   }
+
+  console.log('reload test')
 
   return (
     <div className={styles.headerContainer}>

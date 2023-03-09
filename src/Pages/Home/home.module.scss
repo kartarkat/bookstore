@@ -1,22 +1,9 @@
 .homeContainer{
-    // padding: 50px;
 
-    .booksContainer{
-        margin: 30px 0px;
-        min-height: 300px;
-    }
-
-    .render{
-        color: white;
+    .bookSection{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 }
 
-.heading{
-    // color: red;
-    font-size: 50;
-}
-
-.loader{
-    margin-top: 100px;
-    color: white;
-}
