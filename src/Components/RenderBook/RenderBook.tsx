@@ -34,16 +34,19 @@ const RenderBook: React.FC<Props> = ({ book }) => {
         authors = [],
         // categories = [],
         // description,
-        imageLinks: { thumbnail = images.defaultPreview } = {},
-        // imageLinks,
-
+        imageLinks: { thumbnail } = {},
         title,
     } = volumeInfo;
 
-
+    const securedImgSrc = thumbnail?.replace('http', 'https')
     return (
         <div className={styles.bookContainer}>
-            <img className={styles.image} src={thumbnail} alt={title} />
+            <div className={styles.imageContainer}>
+                <img
+                    className={styles.image}
+                    src={securedImgSrc || images.defaultPreview}
+                    alt={title} />
+            </div>
             <div className={styles.title}>{title}</div>
             <div>By: {authors.map(d => <span>{d}</span>)}</div>
         </div>
