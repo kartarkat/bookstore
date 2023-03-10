@@ -12,6 +12,7 @@ interface VolumeInfo {
     description: string;
     imageLinks: ImageLinks;
     title: string;
+    subtitle: string;
 }
 
 interface Book {
@@ -36,6 +37,7 @@ const RenderBook: React.FC<Props> = ({ book }) => {
         // description,
         imageLinks: { thumbnail } = {},
         title,
+        subtitle,
     } = volumeInfo;
 
     const securedImgSrc = thumbnail?.replace('http', 'https')
@@ -52,6 +54,8 @@ const RenderBook: React.FC<Props> = ({ book }) => {
             {authors.length > 0 ?
                 <div>  By: {authors.map((d, i) => <span key={i}>{d}</span>)}</div>
                 : <div> No Authod Found </div>}
+            <div className={styles.subtitle}>{subtitle}</div>
+            
         </div>
     )
 }

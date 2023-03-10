@@ -6,6 +6,9 @@
     background-color: #222;
     color: white;
     gap: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 
     .logo {
         height: 2rem;
