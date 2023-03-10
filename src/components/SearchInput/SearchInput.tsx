@@ -14,12 +14,14 @@ export default function SearchInput({ handleSubmit }) {
 
     const [suggestions, setSuggestions] = useState<Suggestions>([])
     const inutRef = useRef<HTMLInputElement>(null)
+    const [prevQuery, setPrevQuery] = useState('')
 
     const handleKeyDown = (e) => {
         const query = e.target.value;
         if (e.keyCode === 13) {
+            setPrevQuery(query)
             setSuggestions([])
-            handleSubmit(query);
+            if(prevQuery !== query) handleSubmit(query);
         }
         else autoCompleteFilter(query);
     };
@@ -35,7 +37,7 @@ export default function SearchInput({ handleSubmit }) {
         handleSubmit(value)
     }
 
-    const debouncedHandleKeyDown = debounce(handleKeyDown, 700);
+    const debouncedHandleKeyDown = debounce(handleKeyDown, 500);
 
     return (
         <div className={styles.inputContainer}>
@@ -55,8 +57,9 @@ export default function SearchInput({ handleSubmit }) {
 
             </div>
             <div className={styles.suggestions}>
-                {suggestions.map(item =>
+                {suggestions.map((item, index) =>
                     <div
+                        key={index}
                         className={styles.suggestion}
                         onClick={hanldeSuggestionClick}
                     >
