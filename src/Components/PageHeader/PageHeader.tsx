@@ -10,8 +10,6 @@ function PageHeader({setBooks}) {
     if(query)setBooks(await fetchBooks(query))
   }
 
-  console.log('reload test')
-
   return (
     <div className={styles.headerContainer}>
         <img className={styles.logo} src={images.logo} alt='logo'/>
