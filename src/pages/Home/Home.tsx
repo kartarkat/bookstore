@@ -1,28 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import styles from './home.module.scss'
-import PageHeader from '../../Components/PageHeader'
-import RenderBook from '../../Components/RenderBook/'
-import { fetchBooks } from '../../Utils/api'
+import PageHeader from '../../components/PageHeader'
+import RenderBook from '../../components/RenderBook/'
 import { images } from '../../assets/images'
-
-interface Books {
-  items: Item[]
-}
+import { BooksDataContext } from '../../contexts/BooksDataProvider/'
 
 interface Item {
-  id: string;
+  id: object;
+}
+
+interface Books {
+  items: Item[];
 }
 
 const Home: React.FC = () => {
-
-  const [books, setBooks] = useState<Books>({ items: [] });
-
-  useEffect(() => {
-    (async function () {
-      setBooks(await fetchBooks("anime"))
-    })()
-  }, [])
-
+  const { books, setBooks } = useContext<{
+    books: Books;
+    setBooks: React.Dispatch<React.SetStateAction<Books>>;
+  }>(BooksDataContext);
+  
+  console.log('home load')
 
   return (
     <div className={styles.homeContainer}>

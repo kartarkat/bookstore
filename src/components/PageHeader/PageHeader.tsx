@@ -1,6 +1,6 @@
 import React from 'react'
 import { images } from '../../assets/images'
-import { fetchBooks } from '../../Utils/api'
+import { fetchBooks } from '../../utils/api'
 import SearchInput from '../SearchInput'
 import styles from './PageHeader.module.scss'
 

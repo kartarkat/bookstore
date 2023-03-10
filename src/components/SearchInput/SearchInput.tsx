@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { images } from '../../assets/images'
-import { fetchAutoComplete } from '../../Utils/api';
-import { debounce } from '../../Utils/helper'
+import { fetchAutoComplete } from '../../utils/api';
+import { debounce } from '../../utils/helper'
 import styles from './SearchInput.module.scss'
 
 interface WordSuggestion {
@@ -17,11 +17,11 @@ export default function SearchInput({ handleSubmit }) {
 
     const handleKeyDown = (e) => {
         const query = e.target.value;
-        autoCompleteFilter(query);
         if (e.keyCode === 13) {
-            handleSubmit(query);
             setSuggestions([])
+            handleSubmit(query);
         }
+        else autoCompleteFilter(query);
     };
 
     const autoCompleteFilter = async (query: string) => {
