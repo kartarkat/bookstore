@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { images } from '../../assets/images';
 import styles from './RenderBook.module.scss'
 import { useNavigate } from "react-router-dom";
+import { BooksDataContext } from '../../contexts/BooksDataProvider';
 
 interface ImageLinks {
     thumbnail: string;
@@ -27,17 +28,13 @@ interface Props {
 }
 
 const RenderBook: React.FC<Props> = ({ book }) => {
-const navigate = useNavigate()
+    const navigate = useNavigate()
+    const { setCurrentBook } = useContext<{ setCurrentBook: any }>(BooksDataContext);
 
-
-    const {
-        // id, saleInfo,
-        id, volumeInfo } = book;
+    const { id, volumeInfo } = book;
 
     const {
         authors = [],
-        // categories = [],
-        // description,
         imageLinks: { thumbnail } = {},
         title,
         subtitle,
@@ -46,6 +43,7 @@ const navigate = useNavigate()
     const securedImgSrc = thumbnail?.replace('http', 'https')
     const handleBookClick = () => {
         navigate(`book/${id}`);
+        setCurrentBook(book);
     }
     return (
         <div className={styles.bookContainer} onClick={handleBookClick}>
@@ -61,7 +59,7 @@ const navigate = useNavigate()
                 <div>  By: {authors.map((d, i) => <span key={i}>{d}</span>)}</div>
                 : <div> No Authod Found </div>}
             <div className={styles.subtitle}>{subtitle}</div>
-            
+
         </div>
     )
 }

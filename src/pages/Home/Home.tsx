@@ -4,6 +4,8 @@ import PageHeader from '../../components/PageHeader'
 import RenderBook from '../../components/RenderBook/'
 import { images } from '../../assets/images'
 import { BooksDataContext } from '../../contexts/BooksDataProvider/'
+import SearchInput from '../../components/SearchInput'
+import { fetchBooks } from '../../utils/api'
 
 interface Item {
   id: object;
@@ -18,12 +20,17 @@ const Home: React.FC = () => {
     books: Books;
     setBooks: React.Dispatch<React.SetStateAction<Books>>;
   }>(BooksDataContext);
-  
-  console.log('home load')
 
+  const handleInputSubmit = async(query: string) => {
+    if(query)setBooks(await fetchBooks(query))
+  }
+  
   return (
     <div className={styles.homeContainer}>
-      <PageHeader setBooks={setBooks} />
+      <PageHeader 
+      setBooks={setBooks} 
+      children={<SearchInput handleSubmit={handleInputSubmit}/>}
+      />
       <div className={styles.bookSection}>
         {books.items.length > 1 ?
           books.items.map(book => <RenderBook key={book.id} book={book} />)

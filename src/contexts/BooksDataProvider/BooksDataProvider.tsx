@@ -27,8 +27,9 @@ export const BooksDataContext = createContext<{
 
 const BooksDataProvider: React.FC<Props> = ({ children }) => {
   const [books, setBooks] = useState<Books>({ items: [] });
+  const [currentBook, setCurrentBook] = useState(null);
 
-  const value = { books, setBooks}
+  const value = { books, setBooks, currentBook, setCurrentBook}
 
   useEffect(() => {
     (async function () {
