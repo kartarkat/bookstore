@@ -1,6 +1,10 @@
 .bookContainer {
     padding: 1rem;
+    margin: 1rem;
     width: 15rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
 
     .imageContainer {
         display: flex;
