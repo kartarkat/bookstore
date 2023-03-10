@@ -1,6 +1,7 @@
 import React from 'react'
 import { images } from '../../assets/images';
 import styles from './RenderBook.module.scss'
+import { useNavigate } from "react-router-dom";
 
 interface ImageLinks {
     thumbnail: string;
@@ -26,10 +27,12 @@ interface Props {
 }
 
 const RenderBook: React.FC<Props> = ({ book }) => {
+const navigate = useNavigate()
+
 
     const {
         // id, saleInfo,
-        volumeInfo } = book;
+        id, volumeInfo } = book;
 
     const {
         authors = [],
@@ -41,8 +44,11 @@ const RenderBook: React.FC<Props> = ({ book }) => {
     } = volumeInfo;
 
     const securedImgSrc = thumbnail?.replace('http', 'https')
+    const handleBookClick = () => {
+        navigate(`book/${id}`);
+    }
     return (
-        <div className={styles.bookContainer}>
+        <div className={styles.bookContainer} onClick={handleBookClick}>
             <div className={styles.imageContainer}>
                 <img
                     className={styles.image}

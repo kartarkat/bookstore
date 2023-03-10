@@ -20,6 +20,7 @@ export default function SearchInput({ handleSubmit }) {
         autoCompleteFilter(query);
         if (e.keyCode === 13) {
             handleSubmit(query);
+            setSuggestions([])
         }
     };
 
