@@ -30,7 +30,7 @@ const Home: React.FC = () => {
       <div className={styles.bookSection}>
         {books.items.length > 1 ?
           books.items.map(book => <RenderBook key={book.id} book={book} />)
-          : <div>{images.loader}</div>}
+          : <img src={images.loader} alt='loader'/>}
       </div>
     </div>
   )
