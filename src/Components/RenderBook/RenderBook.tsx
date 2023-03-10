@@ -47,8 +47,11 @@ const RenderBook: React.FC<Props> = ({ book }) => {
                     src={securedImgSrc || images.defaultPreview}
                     alt={title} />
             </div>
-            <div className={styles.title}>{title}</div>
-            <div>By: {authors.map((d,i) => <span key={i}>{d}</span>)}</div>
+            <div className={styles.title}>{title}
+            </div>
+            {authors.length > 0 ?
+                <div>  By: {authors.map((d, i) => <span key={i}>{d}</span>)}</div>
+                : <div> No Authod Found </div>}
         </div>
     )
 }
