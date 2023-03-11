@@ -16,28 +16,43 @@ interface Books {
 }
 
 const Home: React.FC = () => {
-  const { books, setBooks } = useContext<{
+  const { books, setBooks, loader, setLoader } = useContext<{
+    loader: boolean;
     books: Books;
     setBooks: React.Dispatch<React.SetStateAction<Books>>;
+    setLoader: React.Dispatch<React.SetStateAction<boolean>>;
   }>(BooksDataContext);
 
-  const handleInputSubmit = async(query: string) => {
-    if(query)setBooks(await fetchBooks(query))
+  const handleInputSubmit = async (query: string) => {
+    if (query) {
+      try {
+        setLoader(true);
+        const response = await fetchBooks(query);
+        setBooks(response);
+      } catch (error) {
+        throw new Error("Error occured while fetching data");
+      } finally {
+        setLoader(false);
+      }
+    }
   }
-  
+
   return (
     <div className={styles.homeContainer}>
-      <PageHeader 
-      setBooks={setBooks} 
-      children={<SearchInput handleSubmit={handleInputSubmit}/>}
+      <PageHeader
+        setBooks={setBooks}
+        children={<SearchInput handleSubmit={handleInputSubmit} />}
       />
+
       <div className={styles.bookSection}>
-        {books.items.length > 1 ?
-          books.items.map(book => <RenderBook key={book.id} book={book} />)
-          :
+        {loader ?
           <div className={styles.loaderContainer}>
             <img className={styles.loader} src={images.loader} alt='loader' />
           </div>
+          :
+          <> {books.items.length > 1 ?
+            books.items.map(book => <RenderBook key={book.id} book={book} />)
+            : ''} </>
         }
       </div>
 

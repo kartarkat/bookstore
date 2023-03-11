@@ -9,7 +9,6 @@ interface Item {
   id: string;
 }
 
-
 const initialBookData = {
   books: { items: [] },
   setBooks: () => {},
@@ -24,17 +23,17 @@ export const BooksDataContext = createContext<{
   setBooks: React.Dispatch<React.SetStateAction<Books>>;
 }>(initialBookData);
 
-
 const BooksDataProvider: React.FC<Props> = ({ children }) => {
   const [books, setBooks] = useState<Books>({ items: [] });
   const [currentBook, setCurrentBook] = useState(null);
+  const [loader, setLoader] = useState(true)
 
-  const value = { books, setBooks, currentBook, setCurrentBook}
+  const value = { books, setBooks, currentBook, setCurrentBook, loader, setLoader}
 
   useEffect(() => {
     (async function () {
       setBooks(await fetchBooks("anime"))
-    })()
+    })().then(() => setLoader(false))
   }, [])
 
   return (
