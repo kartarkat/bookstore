@@ -11,27 +11,27 @@ export default function BookDetails() {
   }
   interface CurrentBook {
     volumeInfo: {
-      title: string;
-      subtitle: string;
-      description: string;
-      averageRating: number;
-      ratingsCount: number;
-      authors: string[];
-      imageLinks: ImageLinks;
-      publisher: string;
-      publishedDate: Date;
+      title?: string;
+      subtitle?: string;
+      description?: string;
+      averageRating?: number;
+      ratingsCount?: number;
+      authors?: string[];
+      imageLinks?: ImageLinks;
+      publisher?: string;
+      publishedDate?: Date;
     };
     saleInfo: {
-      saleability: string;
-      isEbook: boolean;
-      country: string;
-      retailPrice: object;
-      buyLink: string;
+      saleability?: string;
+      isEbook?: boolean;
+      country?: string;
+      retailPrice?: object;
+      buyLink?: string;
     }
   }
 
   const { currentBook } = useContext<{ currentBook: CurrentBook }>(BooksDataContext)
-  const { volumeInfo, saleInfo } = currentBook || {};
+  const { volumeInfo = {}, saleInfo = {} } = currentBook || {};
 
   const {
     title = 'No Book Selected',
@@ -56,8 +56,8 @@ export default function BookDetails() {
   const renderRating = (averageRating, ratingsCount) => {
     return (
       <div className={styles.rating}>
-        {averageRating === 0 ? <div>Not rated Yet ⭐️</div> :
-          <div>Rated {averageRating}/5 ⭐️ by {ratingsCount}👥</div>
+        {averageRating === 0 ? <>Not rated Yet ⭐️</> :
+          <>Rated {averageRating}/5 ⭐️ by {ratingsCount} 👥</>
         }
       </div>
     );
@@ -71,7 +71,7 @@ export default function BookDetails() {
           <div>
             <div className={styles.subtitle}>{subtitle}</div>
             {renderRating(averageRating, ratingsCount)}
-            <div>Ebook Available:{isEbook ? 'Yes' : 'No'}</div>
+            <div>Ebook Available: {isEbook ? 'Yes' : 'No'}</div>
           </div>
         </div>
         <div className={styles.about}>About the Book:</div>
