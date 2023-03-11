@@ -1,0 +1,43 @@
+.bookContainer {
+
+    padding: 2rem;
+
+    .headSection {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+
+        .subtitle {
+            font-size: 1.3rem;
+            font-style: italic;
+            padding: 0.5rem 0;
+        }
+
+        .rating {
+            padding: 0.2rem;
+            background-color: #222;
+            color: white;
+            width: fit-content;
+            border-radius: 0.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+    }
+
+    .about {
+        padding: 1rem 0;
+        font-size: 1.2rem;
+    }
+
+    .description {
+        max-height: 40vh;
+        overflow: auto;
+    }
+
+    .author {
+        font-weight: 600;
+        padding: 0.5rem 0;
+        font-style: italic;
+    }
+
+}

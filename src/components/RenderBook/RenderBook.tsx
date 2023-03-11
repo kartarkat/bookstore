@@ -57,7 +57,7 @@ const RenderBook: React.FC<Props> = ({ book }) => {
             </div>
             {authors.length > 0 ?
                 <div>  By: {authors.map((d, i) => <span key={i}>{d}</span>)}</div>
-                : <div> No Authod Found </div>}
+                : <div> No Author Found </div>}
             <div className={styles.subtitle}>{subtitle}</div>
 
         </div>
