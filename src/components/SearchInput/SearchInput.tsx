@@ -13,7 +13,7 @@ type Suggestions = WordSuggestion[];
 export default function SearchInput({ handleSubmit }) {
 
     const [suggestions, setSuggestions] = useState<Suggestions>([])
-    const inutRef = useRef<HTMLInputElement>(null)
+    const inputRef = useRef<HTMLInputElement>(null)
     const [prevQuery, setPrevQuery] = useState('')
 
     const handleKeyDown = (e) => {
@@ -30,14 +30,14 @@ export default function SearchInput({ handleSubmit }) {
         setSuggestions(await fetchAutoComplete(query))
     }
 
-    const hanldeSuggestionClick = (e) => {
+    const handleSuggestionClick = (e) => {
         const value = e.target.textContent
-        if(inutRef?.current) inutRef.current.value = value;
+        if(inputRef?.current) inputRef.current.value = value;
         setSuggestions([])
         handleSubmit(value)
     }
 
-    const debouncedHandleKeyDown = debounce(handleKeyDown, 500);
+    const debouncedHandleKeyDown = debounce(handleKeyDown, 250);
 
     return (
         <div className={styles.inputContainer}>
@@ -47,7 +47,7 @@ export default function SearchInput({ handleSubmit }) {
                     placeholder='Search for books'
                     onKeyDown={debouncedHandleKeyDown}
                     className={styles.input}
-                    ref={inutRef}
+                    ref={inputRef}
                 />
                 <img
                     className={styles.icon}
@@ -61,7 +61,7 @@ export default function SearchInput({ handleSubmit }) {
                     <div
                         key={index}
                         className={styles.suggestion}
-                        onClick={hanldeSuggestionClick}
+                        onClick={handleSuggestionClick}
                     >
                         {item.word}</div>
                 )}
