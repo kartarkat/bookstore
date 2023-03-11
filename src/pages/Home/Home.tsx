@@ -2,10 +2,10 @@ import React, { useContext } from 'react'
 import styles from './home.module.scss'
 import PageHeader from '../../components/PageHeader'
 import RenderBook from '../../components/RenderBook/'
-import { images } from '../../assets/images'
 import { BooksDataContext } from '../../contexts/BooksDataProvider/'
 import SearchInput from '../../components/SearchInput'
 import { fetchBooks } from '../../utils/api'
+import Loader from '../../components/Loader'
 
 interface Item {
   id: object;
@@ -45,11 +45,7 @@ const Home: React.FC = () => {
       />
 
       <div className={styles.bookSection}>
-        {loader ?
-          <div className={styles.loaderContainer}>
-            <img className={styles.loader} src={images.loader} alt='loader' />
-          </div>
-          :
+        {loader ? <Loader /> :
           <> {books.items.length > 1 ?
             books.items.map(book => <RenderBook key={book.id} book={book} />)
             : ''} </>
