@@ -30,7 +30,7 @@ const Home: React.FC = () => {
         const response = await fetchBooks(query);
         setBooks(response);
       } catch (error) {
-        throw new Error("Error occured while fetching data");
+        throw new Error("Error occurred while fetching data");
       } finally {
         setLoader(false);
       }
@@ -46,7 +46,7 @@ const Home: React.FC = () => {
 
       <div className={styles.bookSection}>
         {loader ? <Loader /> :
-          <> {books.items.length > 1 ?
+          <> {books?.items.length > 1 ?
             books.items.map(book => <RenderBook key={book.id} book={book} />)
             : ''} </>
         }
