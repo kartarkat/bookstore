@@ -57,7 +57,7 @@ export default function BookDetails() {
     return (
       <div className={styles.rating}>
         {averageRating === 0 ? <div>Not rated Yet ⭐️</div> :
-          <div>Rated {averageRating}/{ratingsCount} ⭐️ </div>
+          <div>Rated {averageRating}/5 ⭐️ by {ratingsCount} 👥</div>
         }
       </div>
     );
