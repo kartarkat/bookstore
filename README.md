@@ -1,3 +1,3 @@
 # Book Store
 
-app link: https://karthik-bookstore.netlify.app/
+website link: https://karthik-bookstore.netlify.app/
