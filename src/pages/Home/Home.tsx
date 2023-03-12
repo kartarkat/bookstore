@@ -4,9 +4,8 @@ import PageHeader from '../../components/PageHeader'
 import RenderBook from '../../components/RenderBook/'
 import { BooksDataContext } from '../../contexts/BooksDataProvider/'
 import SearchInput from '../../components/SearchInput'
-import { fetchBooks } from '../../utils/api'
 import Loader from '../../components/Loader'
-import Pagination from '../../components/Pagination/Pagination'
+import Pagination from '../../components/Pagination'
 
 interface Item {
   id: object;
@@ -17,32 +16,17 @@ interface Books {
 }
 
 const Home: React.FC = () => {
-  const { books, setBooks, loader, setLoader } = useContext<{
+  const { books, loader } = useContext<{
     loader: boolean;
     books: Books;
-    setBooks: React.Dispatch<React.SetStateAction<Books>>;
-    setLoader: React.Dispatch<React.SetStateAction<boolean>>;
+    query: string;
+    setQuery: React.Dispatch<React.SetStateAction<string>>;
   }>(BooksDataContext);
-
-  const handleInputSubmit = async (query: string) => {
-    if (query) {
-      try {
-        setLoader(true);
-        const response = await fetchBooks(query);
-        setBooks(response);
-      } catch (error) {
-        throw new Error("Error occurred while fetching data");
-      } finally {
-        setLoader(false);
-      }
-    }
-  }
 
   return (
     <div className={styles.homeContainer}>
       <PageHeader
-        setBooks={setBooks}
-        children={<SearchInput handleSubmit={handleInputSubmit} />}
+        children={<SearchInput />}
       />
       <div className={styles.bookSection}>
         {loader ? <Loader /> :

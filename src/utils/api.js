@@ -1,8 +1,10 @@
-const FETCH_BOOKS_URL = 'https://www.googleapis.com/books/v1/volumes?maxResults=12&q='
+const FETCH_BOOKS_URL = 'https://www.googleapis.com/books/v1/volumes?q='
 const AUTOCOMPLETE_URL = 'https://api.datamuse.com/sug?s='
 
-export const fetchBooks = async(query) => {
-    const res = await fetch(`${FETCH_BOOKS_URL}${query}`)
+export const fetchBooks = async(query, startIndex = 0, maxResults = 12,) => {
+    if(startIndex !==0 ) startIndex += maxResults 
+    const url = `${FETCH_BOOKS_URL}${query}&startIndex=${startIndex}&maxResults=${maxResults}`
+    const res = await fetch(url)
     return await res.json()
 }
 

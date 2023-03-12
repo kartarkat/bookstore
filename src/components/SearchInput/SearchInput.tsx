@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { images } from '../../assets/images'
+import { BooksDataContext } from '../../contexts/BooksDataProvider';
 import { fetchAutoComplete } from '../../utils/api';
 import { debounce } from '../../utils/helper'
 import styles from './SearchInput.module.scss'
@@ -10,18 +11,21 @@ interface WordSuggestion {
 
 type Suggestions = WordSuggestion[];
 
-export default function SearchInput({ handleSubmit }) {
+export default function SearchInput() {
 
     const [suggestions, setSuggestions] = useState<Suggestions>([])
     const inputRef = useRef<HTMLInputElement>(null)
     const [prevQuery, setPrevQuery] = useState('')
+    const { setQuery } = useContext<{
+        setQuery: React.Dispatch<React.SetStateAction<string>>;
+    }>(BooksDataContext);
 
     const handleKeyDown = (e) => {
         const query = e.target.value;
         if (e.keyCode === 13) {
             setPrevQuery(query)
             setSuggestions([])
-            if(prevQuery !== query) handleSubmit(query);
+            if (prevQuery !== query) setQuery(query);
         }
         else autoCompleteFilter(query);
     };
@@ -32,9 +36,9 @@ export default function SearchInput({ handleSubmit }) {
 
     const handleSuggestionClick = (e) => {
         const value = e.target.textContent
-        if(inputRef?.current) inputRef.current.value = value;
+        if (inputRef?.current) inputRef.current.value = value;
         setSuggestions([])
-        handleSubmit(value)
+        setQuery(value)
     }
 
     const debouncedHandleKeyDown = debounce(handleKeyDown, 250);
@@ -54,7 +58,6 @@ export default function SearchInput({ handleSubmit }) {
                     src={images.search}
                     alt='search'
                 />
-
             </div>
             <div className={styles.suggestions}>
                 {suggestions.map((item, index) =>
