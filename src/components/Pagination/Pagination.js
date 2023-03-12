@@ -14,7 +14,7 @@ const Pagination = (props) => {
     }
 
     return (
-        <div className={styles.painationContainer}>
+        <div className={styles.paginationContainer}>
             <div onClick={incrementPage} disabled={searchIndex !== 0}>Prev</div>
             {pageCount.map((d,i) =>
                 <div key={i} onClick={handlePageClick}>{d + 1}</div>

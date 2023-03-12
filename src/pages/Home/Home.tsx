@@ -6,6 +6,7 @@ import { BooksDataContext } from '../../contexts/BooksDataProvider/'
 import SearchInput from '../../components/SearchInput'
 import { fetchBooks } from '../../utils/api'
 import Loader from '../../components/Loader'
+import Pagination from '../../components/Pagination/Pagination'
 
 interface Item {
   id: object;
@@ -43,12 +44,13 @@ const Home: React.FC = () => {
         setBooks={setBooks}
         children={<SearchInput handleSubmit={handleInputSubmit} />}
       />
-
       <div className={styles.bookSection}>
         {loader ? <Loader /> :
           <> {books?.items.length > 1 ?
             books.items.map(book => <RenderBook key={book.id} book={book} />)
-            : ''} </>
+            : ''}
+            <Pagination />
+          </>
         }
       </div>
 

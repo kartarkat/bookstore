@@ -1,11 +1,19 @@
-.painationContainer{
+.paginationContainer {
     color: white;
     display: flex;
-    div{
+    position: sticky;
+    bottom: 0;
+    background-color: #222;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    justify-content: center;
+    font-size: 1.2rem;
+
+    div {
         padding: 5px 15px;
         text-align: center;
 
-        &:hover{
+        &:hover {
             border-radius: 5px;
             cursor: pointer;
             background-color: rgb(85, 88, 88);
