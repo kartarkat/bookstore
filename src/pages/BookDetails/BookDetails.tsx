@@ -1,8 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { images } from '../../assets/images';
 import PageHeader from '../../components/PageHeader'
 import { BooksDataContext } from '../../contexts/BooksDataProvider'
+import { fetchBook } from '../../utils/api';
 import styles from './BookDetails.module.scss'
+import Loader from '../../components/Loader'
 
 export default function BookDetails() {
 
@@ -27,14 +29,18 @@ export default function BookDetails() {
       country?: string;
       retailPrice?: object;
       buyLink?: string;
-    }
+    };
+    selfLink: string;
   }
 
-  const { currentBook } = useContext<{ currentBook: CurrentBook }>(BooksDataContext)
-  const { volumeInfo = {}, saleInfo = {} } = currentBook || {};
+  let { currentBook, setCurrentBook } = useContext<{
+    currentBook: CurrentBook;
+    setCurrentBook: React.Dispatch<React.SetStateAction<CurrentBook>>
+  }>(BooksDataContext)
+  const { volumeInfo = {}, saleInfo = {}, selfLink } = currentBook || {};
 
   const {
-    title = 'No Book Selected',
+    title = 'Loading Book',
     subtitle = 'No Subtitle found',
     description = 'No description available',
     averageRating = 0,
@@ -45,9 +51,19 @@ export default function BookDetails() {
     authors = [],
   } = volumeInfo
 
-  const { isEbook = false, 
+  const { isEbook = false,
     // buyLink = ''
-   } = saleInfo
+  } = saleInfo
+
+  useEffect(() => {
+    (async function () {
+      if (!currentBook) {
+        const id = (window.location.pathname).split('/').pop()
+        const res = await fetchBook(id)
+        setCurrentBook(res);
+      }
+    }())
+  }, [currentBook, selfLink, setCurrentBook])
 
   const securedImgSrc = thumbnail?.replace('http', 'https')
 
@@ -66,22 +82,25 @@ export default function BookDetails() {
   const renderBookDetails = () => {
     return (
       <div className={styles.bookContainer}>
-        <div className={styles.headSection}>
-          <img src={securedImgSrc} alt="title" />
-          <div>
-            <div className={styles.subtitle}>{subtitle}</div>
-            {renderRating(averageRating, ratingsCount)}
-            <div>Ebook Available: {isEbook ? 'Yes' : 'No'}</div>
+        {!currentBook ? <Loader /> : <>
+          <div className={styles.headSection}>
+            <img src={securedImgSrc} alt="title" />
+            <div>
+              <div className={styles.subtitle}>{subtitle}</div>
+              {renderRating(averageRating, ratingsCount)}
+              <div>Ebook Available: {isEbook ? 'Yes' : 'No'}</div>
+            </div>
           </div>
-        </div>
-        <div className={styles.about}>About the Book:</div>
-        <div className={styles.description}>{description}</div>
-        <div className={styles.author}>
-          {authors.length > 0 ?
-            <>  By: {authors.map((d, i) => <span key={i}>{d}</span>)}</>
-            : <> No Author Found </>
-          }
-        </div>
+          <div className={styles.about}>About the Book:</div>
+          <div className={styles.description}>{description}</div>
+          <div className={styles.author}>
+            {authors.length > 0 ?
+              <>  By: {authors.map((d, i) => <span key={i}>{d}</span>)}</>
+              : <> No Author Found </>
+            }
+          </div>
+        </>
+        }
       </div>
     )
   }

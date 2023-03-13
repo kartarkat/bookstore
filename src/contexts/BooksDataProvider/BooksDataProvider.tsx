@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useEffect, useState} from 'react'
-import { fetchBooks } from '../../utils/api';
+import { fetchAllBooks } from '../../utils/api';
 
 interface Books {
   items: Item[]
@@ -37,7 +37,7 @@ const BooksDataProvider: React.FC<Props> = ({ children }) => {
   const getBooksData = useCallback(async() => {
     try {
       setLoader(true);
-      const response = await fetchBooks(query, searchIndex);
+      const response = await fetchAllBooks(query, searchIndex);
       setBooks(response);
     } catch (error) {
       throw new Error("Error occurred while fetching data.");
