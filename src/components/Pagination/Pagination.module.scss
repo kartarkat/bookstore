@@ -10,13 +10,18 @@
     font-size: 1.2rem;
 
     div {
-        padding: 5px 15px;
+        padding: 0.2rem 0.5rem;
         text-align: center;
+        margin: 0 0.5rem;
 
         &:hover {
             border-radius: 5px;
             cursor: pointer;
             background-color: rgb(85, 88, 88);
         }
+    }
+
+    .active {
+        border-bottom: 0.1rem solid white;
     }
 }

@@ -27,11 +27,11 @@ const Pagination = (props) => {
 
     return (
         <div className={styles.paginationContainer}>
-            <div onClick={incrementPage} disabled={searchIndex !== 0}>Prev</div>
+            <div onClick={incrementPage}>Prev</div>
             {pageArray.map((d,i) =>
-                <div key={i} onClick={handlePageClick}>{d + 1}</div>
+                <div key={i} className={searchIndex === i ? styles.active : ''} onClick={handlePageClick}>{d + 1}</div>
             )}
-            <div onClick={decrementPage} disabled={searchIndex !== 5}>Next</div>
+            <div onClick={decrementPage}>Next</div>
         </div>
     )
 }

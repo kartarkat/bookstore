@@ -14,15 +14,10 @@ export const fetchBook = async (id) => {
 }
 
 export const fetchAutoComplete= async(query) => {
-    // const url 
     const res = await fetch(`${AUTOCOMPLETE_URL}${query}`)
     return await res.json()
 }
 
-
-// https://api.datamuse.com/sug?s=mini
-//startIndex
-
-// reference
+// books api reference
 // https://developers.google.com/books/docs/v1/reference/volumes/list#try-it
 
