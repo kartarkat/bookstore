@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { BooksDataContext } from '../../contexts/BooksDataProvider'
 import styles from './Pagination.module.scss'
 
-const Pagination = (props) => {
+const Pagination = () => {
     const { searchIndex, setSearchIndex } = useContext<{
         searchIndex: number;
         setSearchIndex: React.Dispatch<React.SetStateAction<number>>;
