@@ -31,7 +31,8 @@ export default function SearchInput() {
     };
 
     const autoCompleteFilter = async (query: string) => {
-        setSuggestions(await fetchAutoComplete(query))
+        if(query) setSuggestions(await fetchAutoComplete(query))
+        else setSuggestions([])
     }
 
     const handleSuggestionClick = (e) => {
