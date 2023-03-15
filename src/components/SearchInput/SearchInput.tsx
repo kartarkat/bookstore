@@ -16,7 +16,8 @@ export default function SearchInput() {
     const [suggestions, setSuggestions] = useState<Suggestions>([])
     const inputRef = useRef<HTMLInputElement>(null)
     const [prevQuery, setPrevQuery] = useState('')
-    const { setQuery } = useContext<{
+    const { setQuery, setSearchIndex } = useContext<{
+        setSearchIndex: React.Dispatch<React.SetStateAction<number>>;
         setQuery: React.Dispatch<React.SetStateAction<string>>;
     }>(BooksDataContext);
 
@@ -40,6 +41,7 @@ export default function SearchInput() {
         if (inputRef?.current) inputRef.current.value = value;
         setSuggestions([])
         setQuery(value)
+        setSearchIndex(0)
     }
 
     const debouncedHandleKeyDown = debounce(handleKeyDown, 250);
