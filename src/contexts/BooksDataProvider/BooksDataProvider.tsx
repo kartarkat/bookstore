@@ -35,14 +35,17 @@ const BooksDataProvider: React.FC<Props> = ({ children }) => {
                   query, setQuery }
 
   const getBooksData = useCallback(async() => {
-    try {
-      setLoader(true);
-      const response = await fetchAllBooks(query, searchIndex);
-      setBooks(response);
-    } catch (error) {
-      throw new Error("Error occurred while fetching data.");
-    } finally {
-      setLoader(false);
+    if(query){
+      try {
+        setLoader(true);
+        const res = await fetchAllBooks(query, searchIndex);
+        const response = res?.items ? {...res, booksFound: true} : {...res, items: [], booksFound: false}
+        setBooks(response);
+      } catch (error) {
+        throw new Error("Error occurred while fetching data.");
+      } finally {
+        setLoader(false);
+      }
     }
   },[query, searchIndex])
 

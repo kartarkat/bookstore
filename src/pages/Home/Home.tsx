@@ -13,15 +13,18 @@ interface Item {
 
 interface Books {
   items: Item[];
+  booksFound: boolean;
 }
 
 const Home: React.FC = () => {
-  const { books, loader } = useContext<{
+  const { books, loader, query } = useContext<{
     loader: boolean;
     books: Books;
     query: string;
     setQuery: React.Dispatch<React.SetStateAction<string>>;
   }>(BooksDataContext);
+
+  const { items, booksFound } = books
 
   return (
     <div className={styles.homeContainer}>
@@ -30,10 +33,13 @@ const Home: React.FC = () => {
       />
       <div className={styles.bookSection}>
         {loader ? <Loader /> :
-          <> {books?.items.length > 1 ?
-            books.items.map(book => <RenderBook key={book.id} book={book} />)
-            : ''}
-            <Pagination />
+          <>
+            {items?.length > 1 ?
+              items.map(book => <RenderBook key={book.id} book={book} />)
+              : ''}
+            {!booksFound && !loader ?
+              <div className={styles.booksFound}>No books Found for "{query}", please search for different book</div>
+              : <Pagination />}
           </>
         }
       </div>
