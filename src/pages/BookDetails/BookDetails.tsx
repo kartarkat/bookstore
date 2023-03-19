@@ -51,9 +51,7 @@ export default function BookDetails() {
     authors = [],
   } = volumeInfo
 
-  const { isEbook = false,
-    // buyLink = ''
-  } = saleInfo
+  const { isEbook = false, buyLink = ''} = saleInfo
 
   useEffect(() => {
     (async function () {
@@ -88,7 +86,7 @@ export default function BookDetails() {
             <div>
               <div className={styles.subtitle}>{subtitle}</div>
               {renderRating(averageRating, ratingsCount)}
-              <div>Ebook Available: {isEbook ? 'Yes' : 'No'}</div>
+              <div>Ebook Available: {isEbook ? <>Yes <a href={buyLink} target='_blank' rel="noreferrer">🔗</a></> : 'No' }</div>
             </div>
           </div>
           <div className={styles.about}>About the Book:</div>
