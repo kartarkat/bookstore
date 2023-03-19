@@ -3,6 +3,7 @@ import { images } from '../../assets/images'
 import { BooksDataContext } from '../../contexts/BooksDataProvider';
 import { fetchAutoComplete } from '../../utils/api';
 import { debounce } from '../../utils/helper'
+import * as DOMPurify from 'dompurify';
 import styles from './SearchInput.module.scss'
 
 interface WordSuggestion {
@@ -22,7 +23,7 @@ export default function SearchInput() {
     }>(BooksDataContext);
 
     const handleKeyDown = (e) => {
-        const query = e.target.value;
+        const query = DOMPurify.sanitize(e.target.value);
         if (e.keyCode === 13) {
             setPrevQuery(query)
             setSuggestions([])
