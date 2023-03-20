@@ -22,6 +22,7 @@ export default function BookDetails() {
       imageLinks?: ImageLinks;
       publisher?: string;
       publishedDate?: Date;
+      previewLink?: string;
     };
     saleInfo: {
       saleability?: string;
@@ -45,13 +46,14 @@ export default function BookDetails() {
     description = 'No description available',
     averageRating = 0,
     ratingsCount = 0,
+    previewLink = '',
     // publisher = 'Publisher Not found',
     // publishedDate = 'Date not found',
     imageLinks: { thumbnail = images.defaultPreview } = {},
     authors = [],
   } = volumeInfo
 
-  const { isEbook = false, buyLink = ''} = saleInfo
+  const { isEbook = false, buyLink = '' } = saleInfo
 
   useEffect(() => {
     (async function () {
@@ -82,11 +84,13 @@ export default function BookDetails() {
       <div className={styles.bookContainer}>
         {!currentBook ? <Loader /> : <>
           <div className={styles.headSection}>
-            <img src={securedImgSrc} alt="title" />
+            <a href={previewLink} target='_blank' rel="noreferrer">
+              <img src={securedImgSrc} alt="title" />
+            </a>
             <div>
               <div className={styles.subtitle}>{subtitle}</div>
               {renderRating(averageRating, ratingsCount)}
-              <div>Ebook Available: {isEbook ? <>Yes <a href={buyLink} target='_blank' rel="noreferrer">🔗</a></> : 'No' }</div>
+              <div>Ebook Available: {isEbook ? <>Yes <a href={buyLink} target='_blank' rel="noreferrer">🔗</a></> : 'No'}</div>
             </div>
           </div>
           <div className={styles.about}>About the Book:</div>
